@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OJ The Designer</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/typographyAnimations.css" />
+  <link rel="stylesheet" href="css/3d-effects.css" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- Background -->
+  <div class="floating-orb floating-orb-1"></div>
+  <div class="floating-orb floating-orb-2"></div>
+  <div class="floating-orb floating-orb-3"></div>
+
+  <!-- Navbar -->
+  <div id="navbar"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+
+      <div class="hero-left">
+        <h1>Hi, I'm Ojasvi Sharma</h1>
+        <h2>Young Artist & Creative Explorer</h2>
+
+        <div class="hero-buttons">
+          <a href="pages/portfolio.html" class="btn-primary">
+            🎨 Explore Art Studio
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="parallax-image">
+          <img src="assets/images/Ojasvi.jpg" alt="Ojasvi Art" />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <main class="container">
+
+    <section class="journey">
+      <h2 class="anim-heading">Introduction</h2>
+      <p>
+        Hello, my name is Ojasvi Sharma. I am a creative individual with a strong interest in design and visual storytelling. I enjoy expressing ideas through art and exploring different mediums such as oil pastels, acrylic painting, and sketching.<br><br>
+
+        Along with my creative pursuits, I am also actively involved in sports and music. I am a lawn tennis and table tennis player, and a trained classical vocalist. These experiences have helped me develop discipline, focus, and a sense of rhythm, which I bring into my creative work.<br><br>
+
+        I am currently pursuing my studies through Zakir Husain Delhi College (DU) while preparing for NIFT, where I have successfully cleared Round 1. My goal is to build a career in Communication Design, where I can combine creativity with purpose to create meaningful and impactful visual experiences.<br><br>
+
+        I am constantly experimenting with new techniques and ideas to improve my skills and develop my own unique style.
+      </p>
+    </section>
+
+    <section class="art-info black">
+      <h2 class="anim-heading">Skills & Medium</h2>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Traditional Art 🖌️</th>
+              <th>Digital Art 💻</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Oil Pastel</td><td>Digital Illustration</td></tr>
+            <tr><td>2</td><td>Watercolor Painting</td><td>Canva & Figma</td></tr>
+            <tr><td>3</td><td>Pencil Sketching</td><td>Adobe Photoshop</td></tr>
+            <tr><td>4</td><td>Acrylic Painting</td><td>Adobe Premiere PRO</td></tr>
+            <tr><td>5</td><td>Oil Painting</td><td>Web Designing</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="anim-subheading">Areas of Interest</h3>
+
+      <div class="art-cards">
+        <a>Visual Communication</a>
+        <a>Illustration & Storytelling</a>
+        <a>Graphic Design</a>
+        <a>Layout & Composition</a>
+        <a>Poster Design</a>
+        <a>Typography Exploration</a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <div id="footer"></div>
+
+  <!-- Cursor -->
+  <div class="circle" id="customCursor"></div>
+
+  <!-- 🔥 NAVBAR LOAD + FIX -->
+  <script>
+    fetch("components/navbar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+
+        window.syncThemeToggle?.();
+
+        // ✅ MOBILE MENU FIX
+        const menuBtn = document.querySelector(".menu-toggle");
+        const navLinks = document.querySelector(".nav-links");
+
+        if (menuBtn && navLinks) {
+          menuBtn.addEventListener("click", () => {
+            navLinks.classList.toggle("active");
+          });
+        }
+      });
+  </script>
+
+  <!-- Footer Load -->
+  <script>
+    fetch("components/footer.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("footer").innerHTML = data;
+      });
+  </script>
+
+  <!-- Scripts -->
+  <script src="js/CustomCursor.js"></script>
+  <script src="js/3d-parallax.js"></script>
+
+</body>
+</html>
