@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <div class="nav-sticky">
+        <div class="nav-pill" id="nav-pill">
+
+            <!-- LOGO -->
+            <a class="logo" href="/index.html">
+                <div class="logo-orb">🎨</div>
+                <div class="logo-text">
+                    <span class="logo-name">Ojasvi</span>
+                    <span class="logo-tag">Art Portfolio</span>
+                </div>
+            </a>
+
+            <!-- DESKTOP NAV -->
+            <div class="nav-center">
+                <a href="/index.html">Home</a>
+                <a href="/pages/about.html">About</a>
+                <a href="/pages/portfolio.html">Portfolio</a>
+                <a href="/admin.html">Admin</a>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="nav-right">
+
+                <a class="btn-ghost" href="/pages/getInTouch.html">Get in Touch</a>
+
+                <div class="sep"></div>
+
+                <a class="btn-primary" href="/pages/portfolio.html">
+                    <span class="play">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                            <rect x="3" y="3" width="7" height="7"/>
+                            <rect x="14" y="3" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/>
+                            <rect x="14" y="14" width="7" height="7"/>
+                        </svg>
+                    </span>
+                    My Work
+                </a>
+            </div>
+
+            <!-- HAMBURGER -->
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+
+        <!-- MOBILE MENU -->
+        <div class="mobile-drop" id="mobile-drop">
+
+            <button class="mobile-theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme">
+                <span class="theme-toggle-icon" data-theme-icon>🌙</span>
+                <span data-theme-label>Switch to Dark</span>
+            </button>
+
+            <a href="/index.html"><span class="m-ico">🏠</span> Home</a>
+            <a href="/pages/about.html"><span class="m-ico">☀️</span> About</a>
+            <a href="/pages/portfolio.html"><span class="m-ico">🖌️</span> Portfolio</a>
+            <a href="/pages/contact.html"><span class="m-ico">💌</span> Contact</a>
+        </div>
+    </div>
+
+    <!-- ACTIVE NAV SCRIPT -->
+    <script>
+        const currentPath = window.location.pathname;
+
+        const navLinks = document.querySelectorAll(".nav-center a, .mobile-drop a");
+
+        navLinks.forEach(link => {
+            const linkPath = new URL(link.href).pathname;
+
+            if (
+                currentPath === linkPath ||
+                (currentPath === "/" && linkPath === "/index.html")
+            ) {
+                link.classList.add("active");
+            }
+        });
+    </script>
+
+</body>
+</html>
