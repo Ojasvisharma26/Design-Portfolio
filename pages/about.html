@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About OJ The Designer</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/aboutStyle.css">
+    <link rel="stylesheet" href="../css/typographyAnimations.css">
+    <link rel="stylesheet" href="../css/3d-effects.css">
+</head>
+<body>
+    <div class="floating-orb floating-orb-1"></div>
+    <div class="floating-orb floating-orb-2"></div>
+    <div class="floating-orb floating-orb-3"></div>
+
+    <div id="navbar"></div>
+
+    <main class="about-page">
+
+        <!-- Hero / Profile -->
+        <section class="about-hero anim-heading">
+            <div class="hero-image-wrap">
+                <img class="hero-portrait" src="../assets/images/Ojasvi.jpg" alt="Ojasvi The Designer">
+                <div class="hero-image-ring"></div>
+            </div>
+            <div class="hero-text">
+                <p class="hero-label">&#10022; Designer</p>
+                <h1 class="hero-name">Ojasvi Sharma<br><span class="hero-name-accent">The Designer</span></h1>
+                <p class="hero-handle">@26_Ojasvi</p>
+                <p class="hero-tagline">
+                    Blending traditional strokes with digital vibes &mdash;<br>
+                    one drawing at a time.
+                </p>
+            </div>
+        </section>
+
+        <!-- Bio -->
+        <section class="about-section anim-subheading">
+            <div class="section-card">
+                <span class="section-icon">&#127912;</span>
+                <h2 class="section-title">Who Am I?</h2>
+                <p class="section-body">
+    I’m <strong>Ojasvi Sharma</strong>, an artist working across both traditional 
+    and digital mediums. From charcoal sketches and pencil work to bold oil, 
+    acrylic, and pastel paintings, I focus on creating visuals that stand out.
+</p>
+
+<p class="section-body">
+    I also explore digital art and graphic design, blending creativity with 
+    modern tools to build work that feels both expressive and contemporary.
+</p>
+                <blockquote class="about-quote">
+                    &ldquo;Art is not what you see, but what you make others see.&rdquo;
+                </blockquote>
+            </div>
+        </section>
+
+        <!-- Art Styles -->
+        <section class="about-section anim-text">
+            <div class="section-card">
+                <span class="section-icon">&#9998;&#65039;</span>
+                <h2 class="section-title">Art Styles I Explore</h2>
+                <p class="section-body">
+                    From delicate pencil work to bold oil pastels, here are the mediums and styles
+                    that define this gallery:
+                </p>
+                <div class="style-tags">
+    <span class="style-tag tag-mandala">💻 Graphic Design</span>
+    <span class="style-tag tag-oilpastel">🎨 Oil Pastels</span>
+    <span class="style-tag tag-painting">🖌️ Painting</span>
+    <span class="style-tag tag-pencilcolor">🗞️ Soft Pastels</span>
+    <span class="style-tag tag-pencilshading">✏️ Pencil Sketching</span>
+</div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+<section class="about-section anim-text">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-number">10</span>
+            <span class="stat-label">Mediums Explored</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">15</span>
+            <span class="stat-label">Artworks Created</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">2025</span>
+            <span class="stat-label">Started Journey</span>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+    <div class="circle" id="customCursor"></div>
+    <div id="footer"></div>
+
+    <script>
+      fetch("../components/navbar.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("navbar").innerHTML = data;
+          window.syncThemeToggle?.();
+        });
+    </script>
+
+    <script>
+      fetch("../components/footer.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("footer").innerHTML = data;
+        });
+    </script>
+
+    <script src="../js/CustomCursor.js"></script>
+    <script src="../js/3d-parallax.js"></script>
+    <script>
+</script>
+</body>
+</html>
