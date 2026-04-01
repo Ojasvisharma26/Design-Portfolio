@@ -17,9 +17,9 @@
     <h1 class="anim-heading">Admin Portal ⚙️</h1>
   </div>
 
-  <div class="admin-container admin-page">
+  <div class="admin-container">
 
-    <!-- 🔐 LOGIN -->
+    <!-- LOGIN -->
     <div class="admin-box" id="loginBox">
       <form onsubmit="login(); return false;">
         <input type="password" id="pass" placeholder="Enter Password">
@@ -27,137 +27,66 @@
       </form>
     </div>
 
-    <!-- 🎨 UPLOAD -->
-    <div class="admin-box" id="uploadBox">
+    <!-- UPLOAD -->
+    <div class="admin-box" id="uploadBox" style="display:none;">
       <h3>Upload Image 🎨</h3>
       <input type="file" id="fileInput" accept="image/*">
       <button onclick="uploadImage()">Upload</button>
       <div id="preview"></div>
     </div>
 
-    <!-- 🗂️ GALLERY -->
-    <div class="admin-box" id="galleryBox">
-      <h3>Your Images 🗑️</h3>
-      <div id="imageList" class="gallery-grid"></div>
-    </div>
-
   </div>
 
   <style>
-    .admin-heading {
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    .admin-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      margin-top: 50px;
-      width: 100%;
-      padding: 0 20px;
-    }
-
-    .admin-box {
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(12px);
-      padding: 25px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(160, 100, 200, 0.2);
-      width: 95%;
-      max-width: 1400px;
-      text-align: center;
-    }
-
-    input,
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 10px;
-      border: none;
-    }
-
-    button {
-      background: linear-gradient(45deg, #c9a8f0, #f9b8d6);
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    #preview img {
-      width: 100%;
-      margin-top: 10px;
-      border-radius: 10px;
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 12px;
-      margin-top: 15px;
-    }
-
-    .gallery-item {
-      position: relative;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .gallery-item img {
-      width: 100%;
-    }
-
-    .delete-btn {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      background: rgba(255, 0, 0, 0.9);
-      color: white;
-      font-size: 12px;
-      padding: 4px 6px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-    }
-
-    .delete-btn:hover {
-      background: red;
-    }
-
-    #uploadBox,
-    #galleryBox {
-      display: none;
-    }
+    .admin-heading { text-align:center; margin-top:40px; }
+    .admin-container { display:flex; flex-direction:column; align-items:center; gap:20px; margin-top:50px; }
+    .admin-box { background:rgba(255,255,255,0.5); padding:25px; border-radius:20px; width:90%; max-width:500px; text-align:center; }
+    input,button { width:100%; padding:10px; margin-top:10px; border-radius:10px; border:none; }
+    button { background:linear-gradient(45deg,#c9a8f0,#f9b8d6); cursor:pointer; font-weight:bold; }
+    #preview img { width:100%; margin-top:10px; border-radius:10px; }
   </style>
 
-  <script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // 🔥 YOUR CONFIG
+    const firebaseConfig = {
+      apiKey: "AIzaSyBwBNVSsNmgJ5Y3rsZQgWtHZqP-pok7dYo",
+      authDomain: "oj-art-portfolio.firebaseapp.com",
+      projectId: "oj-art-portfolio",
+      storageBucket: "oj-art-portfolio.firebasestorage.app",
+      messagingSenderId: "485340875261",
+      appId: "1:485340875261:web:bb629d032c60836afa7194",
+      measurementId: "G-BPX2N36ZHN"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
     const PASSWORD = "Tatti";
     const CLOUD_NAME = "dc5yun5vn";
     const UPLOAD_PRESET = "orrnhlca";
 
-    // 🔐 LOGIN
-    function login() {
+    window.login = function () {
       const pass = document.getElementById("pass").value;
 
       if (pass === PASSWORD) {
         document.getElementById("loginBox").style.display = "none";
         document.getElementById("uploadBox").style.display = "block";
-        document.getElementById("galleryBox").style.display = "block";
-        loadImages();
       } else {
         alert("Wrong password ❌");
       }
-    }
+    };
 
-    // 📤 UPLOAD
-    async function uploadImage() {
+    window.uploadImage = async function () {
       const file = document.getElementById("fileInput").files[0];
       if (!file) return alert("Select file");
 
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", UPLOAD_PRESET);
+      formData.append("folder", "portfolio");
 
       try {
         const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
@@ -168,64 +97,29 @@
         const data = await res.json();
         const imageUrl = data.secure_url;
 
-        let images = JSON.parse(localStorage.getItem("portfolioImages")) || [];
-        images.push(imageUrl);
-        localStorage.setItem("portfolioImages", JSON.stringify(images));
+        // 🔥 Save to Firebase
+        await addDoc(collection(db, "images"), {
+          url: imageUrl,
+          createdAt: Date.now()
+        });
 
         document.getElementById("preview").innerHTML = `<img src="${imageUrl}">`;
 
-        loadImages();
-        alert("Uploaded 🚀");
+        alert("Uploaded & Synced 🚀");
 
       } catch (err) {
         console.error(err);
         alert("Upload failed ❌");
       }
-    }
+    };
 
-    // 📥 LOAD
-    function loadImages() {
-      const container = document.getElementById("imageList");
-      container.innerHTML = "";
-
-      let images = JSON.parse(localStorage.getItem("portfolioImages")) || [];
-
-      if (images.length === 0) {
-        container.innerHTML = "<p>No images yet 😅</p>";
-        return;
-      }
-
-      images.forEach((img, index) => {
-        const div = document.createElement("div");
-        div.className = "gallery-item";
-
-        div.innerHTML = `
-          <img src="${img}">
-          <button class="delete-btn" onclick="deleteImage(${index})">🗑️</button>
-        `;
-
-        container.appendChild(div);
-      });
-    }
-
-    // 🗑️ DELETE
-    function deleteImage(index) {
-      if (!confirm("Delete this image?")) return;
-
-      let images = JSON.parse(localStorage.getItem("portfolioImages")) || [];
-      images.splice(index, 1);
-      localStorage.setItem("portfolioImages", JSON.stringify(images));
-
-      loadImages();
-    }
-
-    // 🔝 NAVBAR
+    // Navbar
     fetch("./components/navbar.html")
       .then(res => res.text())
       .then(data => {
         document.getElementById("navbar").innerHTML = data;
-        window.syncThemeToggle?.();
       });
+
   </script>
 
 </body>
